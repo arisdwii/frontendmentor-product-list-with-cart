@@ -19,48 +19,49 @@
 <body>
   <main>
     <!-- Desserts Section -->
-    <section class="menu">
-      <div class="menu-container">
-        <h1 class="menu-title">Desserts</h1>
+    <section class="dessert-section">
+      <div class="dessert-container">
+        <h1 class="dessert-title">Desserts</h1>
 
-        <div class="menu-grid">
-          <article class="menu-item">
-            <div class="menu-img-wrapper">
-              <picture>
+        <div class="dessert-list">
+          <!-- Dessert Item -->
+          <article class="dessert-item">
+            <div class="dessert-img-wrapper">
+              <picture class="dessert-img">
                 <source media="(min-width: 1024px)" srcset="assets/images/image-waffle-desktop.jpg">
                 <source media="(min-width: 640px)" srcset="assets/images/image-waffle-tablet.jpg">
                 <img src="assets/images/image-waffle-mobile.jpg" alt="Waffle" draggable="false">
               </picture>
 
-              <div class="menu-add-to-cart btn-add-to-cart">
-                <img src="assets/images/icon-add-to-cart.svg" alt="icon-add-to-cart" draggable="false">
-                <span>Add to Cart</span>
+              <div class="dessert-add-btn btn-add-to-cart">
+                <span class="add-button-label">Add to Cart</span>
               </div>
             </div>
 
-            <div class="menu-details">
-              <p class="menu-name">Waffle</p>
-              <p class="menu-desc">Waffle with Berries</p>
-              <p class="menu-price">$6.50</p>
+            <div class="dessert-info">
+              <p class="dessert-name">Waffle</p>
+              <p class="dessert-desc">Waffle with Berries</p>
+              <p class="dessert-price">$6.50</p>
             </div>
           </article>
 
-          <article class="menu-item active">
-            <div class="menu-img-wrapper">
-              <picture>
+          <!-- Dessert Item With Quantity -->
+          <article class="dessert-item active">
+            <div class="dessert-img-wrapper">
+              <picture class="dessert-img">
                 <source media="(min-width: 1024px)" srcset="assets/images/image-creme-brulee-desktop.jpg">
                 <source media="(min-width: 640px)" srcset="assets/images/image-creme-brulee-tablet.jpg">
                 <img src="assets/images/image-creme-brulee-mobile.jpg" alt="Waffle" draggable="false">
               </picture>
 
-              <div class="menu-quantity-selector btn-add-to-cart">
-                <button class="btn-decrement">
+              <div class="dessert-qty-controls btn-add-to-cart">
+                <button class="qty-decrease-btn">
                   <svg xmlns="http://www.w3.org/2000/svg" width="10" height="2" fill="none" viewBox="0 0 10 2">
                     <path fill="currentColor" d="M0 .375h10v1.25H0V.375Z" />
                   </svg>
                 </button>
-                <span class="menu-qty">1</span>
-                <button class="btn-increment">
+                <span class="qty-value">1</span>
+                <button class="qty-increase-btn">
                   <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 10 10">
                     <path fill="currentColor" d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z" />
                   </svg>
@@ -68,10 +69,10 @@
               </div>
             </div>
 
-            <div class="menu-details">
-              <p class="menu-name">Crème Brûlée</p>
-              <p class="menu-desc">Vanilla Bean Crème Brûlée</p>
-              <p class="menu-price">$7.00</p>
+            <div class="dessert-info">
+              <p class="dessert-name">Crème Brûlée</p>
+              <p class="dessert-desc">Vanilla Bean Crème Brûlée</p>
+              <p class="dessert-price">$7.00</p>
             </div>
           </article>
         </div>
@@ -79,27 +80,28 @@
     </section>
 
     <!-- Cart Section -->
-    <section class="cart">
+    <section class="cart-section">
       <div class="cart-container">
         <h2 class="cart-title">Your Cart (0)</h2>
 
         <!-- Empty Cart Message -->
         <div class="cart-empty">
-          <img src="assets/images/illustration-empty-cart.svg" alt="Empty Cart Illustration" draggable="false">
-          <p>Your added items will appear here</p>
+          <img src="assets/images/illustration-empty-cart.svg" alt="Empty Cart Illustration" draggable="false"
+            class="cart-empty-img">
+          <p class="cart-empty-msg">Your added items will appear here</p>
         </div>
 
         <!-- Filled Cart -->
-        <div class="cart-content">
+        <div class="cart-details">
           <div class="cart-items">
             <article class="cart-item">
               <div class="cart-item-info">
                 <p class="cart-item-name">Classic Tiramisu</p>
 
                 <div class="cart-item-pricing">
-                  <p>1x</p>
-                  <p>@ $5.50</p>
-                  <p>$5.50</p>
+                  <p class="cart-item-qty">1x</p>
+                  <p class="cart-item-unit-price">@ $5.50</p>
+                  <p class="cart-item-total-price">$5.50</p>
                 </div>
               </div>
 
@@ -116,9 +118,9 @@
                 <p class="cart-item-name">Vanilla Bean</p>
 
                 <div class="cart-item-pricing">
-                  <p>4x</p>
-                  <p>@ $7.50</p>
-                  <p>$28.00</p>
+                  <p class="cart-item-qty">4x</p>
+                  <p class="cart-item-unit-price">@ $7.50</p>
+                  <p class="cart-item-total-price">$28.00</p>
                 </div>
               </div>
 
@@ -131,66 +133,85 @@
             </article>
           </div>
 
-          <div class="cart-total">
-            <p>Order Total</p>
-            <h3 class="order-total">$46.50</h3>
+          <div class="cart-summary">
+            <p class="cart-summary-label">Order Total</p>
+            <h3 class="cart-summary-total">$46.50</h3>
           </div>
 
           <div class="cart-info">
-            <img src="assets/images/icon-carbon-neutral.svg" alt="">
-            <p>This is a <span>carbon-neutral</span> delivery</p>
+            <p class="cart-info-msg">This is a <span>carbon-neutral</span> delivery</p>
           </div>
 
-          <button class="cart-confirm">Confirm Order</button>
+          <button class="cart-confirm-btn">Confirm Order</button>
         </div>
       </div>
     </section>
 
+    <!-- Order Confimation Section -->
     <section class="confirmation">
       <div class="confirmation-container">
-        <img src="assets/images/icon-order-confirmed.svg" alt="Order Confirmed Icon" class="confirmation-icon"
-          draggable="false">
-        <h2 class="confirmation-title">Order Confirmed</h2>
-        <p class="confirmation-desc">We hope you enjoy your food!</p>
+        <div class="confirmation-wrapper">
+          <img src="assets/images/icon-order-confirmed.svg" alt="Order Confirmed Icon" class="confirmation-icon"
+            draggable="false">
+          <h2 class="confirmation-title">Order Confirmed</h2>
+          <p class="confirmation-desc">We hope you enjoy your food!</p>
 
-        <div class="confirmation-content">
-          <div class="confirmation-items">
-            <article class="confirmation-item">
-              <img src="assets/images/image-tiramisu-thumbnail.jpg" alt="" draggable="false">
+          <div class="confirmation-dessert">
+            <div class="confirmation-items">
+              <article class="confirmation-item">
+                <img src="assets/images/image-tiramisu-thumbnail.jpg" alt="" class="confirmation-item-thumb"
+                  draggable="false">
 
-              <div class="confirmation-item-info">
-                <p>Classic Tiramisuuuuuuuuuuuuuuuuuuu</p>
-                <div>
-                  <p>1x</p>
-                  <p>@ $5.50</p>
+                <div class="confirmation-item-info">
+                  <p class="confirmation-item-name">Classic Tiramisuuuuuuuuuuuuuuuuuuu</p>
+                  <div class="confirmation-item-qty-info">
+                    <p class="confirmation-item-qty">1x</p>
+                    <p class="confirmation-item-unit-price">@ $5.50</p>
+                  </div>
                 </div>
-              </div>
 
-              <p class="confirmation-item-total">$5.50</p>
-            </article>
+                <p class="confirmation-item-price">$5.50</p>
+              </article>
 
-            <article class="confirmation-item">
-              <img src="assets/images/image-baklava-tablet.jpg" alt="" draggable="false">
+              <article class="confirmation-item">
+                <img src="assets/images/image-tiramisu-thumbnail.jpg" alt="" class="confirmation-item-thumb"
+                  draggable="false">
 
-              <div class="confirmation-item-info">
-                <p>Vanilla Bean</p>
-                <div>
-                  <p>4x</p>
-                  <p>@ $7.00</p>
+                <div class="confirmation-item-info">
+                  <p class="confirmation-item-name">Classic Tiramisuuuuuuuuuuuuuuuuuuu</p>
+                  <div class="confirmation-item-qty-info">
+                    <p class="confirmation-item-qty">1x</p>
+                    <p class="confirmation-item-unit-price">@ $5.50</p>
+                  </div>
                 </div>
-              </div>
 
-              <p class="confirmation-item-total">$28.00</p>
-            </article>
+                <p class="confirmation-item-price">$5.50</p>
+              </article>
+
+              <article class="confirmation-item">
+                <img src="assets/images/image-tiramisu-thumbnail.jpg" alt="" class="confirmation-item-thumb"
+                  draggable="false">
+
+                <div class="confirmation-item-info">
+                  <p class="confirmation-item-name">Classic Tiramisuuuuuuuuuuuuuuuuuuu</p>
+                  <div class="confirmation-item-qty-info">
+                    <p class="confirmation-item-qty">1x</p>
+                    <p class="confirmation-item-unit-price">@ $5.50</p>
+                  </div>
+                </div>
+
+                <p class="confirmation-item-price">$5.50</p>
+              </article>
+            </div>
+
+            <div class="confirmation-total">
+              <p class="confirmation-total-label">Order Total</p>
+              <h3 class="confirmation-total-price">$46.50</h3>
+            </div>
           </div>
 
-          <div class="confirmation-total">
-            <p>Order Total</p>
-            <h3>$46.50</h3>
-          </div>
+          <a href="" class="confirmation-new-order-link">Start New Order</a>
         </div>
-
-        <a href="" class="confirmation-restart">Start New Order</a>
       </div>
     </section>
   </main>
