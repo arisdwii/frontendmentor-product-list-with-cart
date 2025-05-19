@@ -76,6 +76,7 @@ body {
   justify-content: space-between;
   border: 2px solid transparent;
   border-radius: 100px;
+  user-select: none;
 }
 
 .dessert-add-btn {
@@ -478,5 +479,54 @@ footer {
 @media (max-height: 568px) {
   .confirmation-container {
     height: 80vh;
+  }
+}
+
+@media (min-width: 500px) {
+  .dessert-list {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .dessert-info {
+    margin-block: 0.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .cart-section {
+    margin-top: 4rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .dessert-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  main {
+    width: 90%;
+    max-width: 1120px;
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .dessert-section {
+    grid-column: span 2;
+  }
+
+  .dessert-container {
+    width: 100%;
+  }
+
+  .cart-section {
+    width: 100%;
+    height: max-content;
+    margin: 1rem auto 0;
   }
 }
