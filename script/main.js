@@ -8,18 +8,16 @@ fetch("data.json")
   .then((datas) => {
     desserts = datas.map((data) => ({ ...data, qty: 0 }));
     renderDesserts();
+    renderCarts();
   });
 
 function renderDesserts() {
   dessertList.innerHTML = "";
 
   desserts.forEach((data, index) => {
-    const controls =
-      data.qty === 0
-        ? `<div class="dessert-add-btn btn-add-to-cart" data-action="add" data-index=${index}>
-                    <span class="add-button-label">Add to Cart</span>
-                  </div>`
-        : `<div class="dessert-qty-controls btn-add-to-cart" data-index=${index}>
+    const isInCart = data.qty > 0;
+    const controls = isInCart
+      ? `<div class="dessert-qty-controls btn-add-to-cart" data-index=${index}>
                     <button class="qty-decrease-btn" data-action="decrease">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -46,10 +44,15 @@ function renderDesserts() {
                         />
                       </svg>
                     </button>
+                  </div>`
+      : `<div class="dessert-add-btn btn-add-to-cart" data-action="add" data-index=${index}>
+                    <span class="add-button-label">Add to Cart</span>
                   </div>`;
 
     dessertList.innerHTML += `
-          <article class="dessert-item" data-index="${index}">
+          <article class="dessert-item ${
+            isInCart ? "active" : ""
+          }" data-index="${index}">
             <div class="dessert-img-wrapper">
               <picture class="dessert-img">
                 <source media="(min-width: 1024px)" srcset="${
@@ -77,38 +80,90 @@ function renderDesserts() {
   });
 
   setupButtons();
+  renderCarts();
 }
 
 function setupButtons() {
-  const addButtons = document.querySelectorAll("[data-action='add']");
-  addButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const index = btn.dataset.index;
-      desserts[index].qty = 1;
-      carts = [...desserts[index]];
-      console.log(carts);
-      renderDesserts();
-    });
-  });
+  document.querySelectorAll("[data-action]").forEach((btn) => {
+    const index = btn.closest("[data-index]")?.dataset.index;
 
-  const incButtons = document.querySelectorAll("[data-action='increase']");
-  incButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
-      const index = btn.closest("[data-index]").dataset.index;
-      desserts[index].qty += 1;
-      renderDesserts();
-    });
-  });
+      if (index === undefined) return;
 
-  const decButtons = document.querySelectorAll("[data-action='decrease']");
-  decButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const index = btn.closest("[data-index]").dataset.index;
-      desserts[index].qty -= 1;
-      if (desserts[index].qty < 1) {
-        desserts[index].qty = 0;
+      const dessert = desserts[index];
+
+      switch (btn.dataset.action) {
+        case "add":
+          dessert.qty = 1;
+          if (!carts.includes(dessert)) carts.push(dessert);
+          break;
+
+        case "increase":
+          dessert.qty += 1;
+          break;
+
+        case "decrease":
+          dessert.qty -= 1;
+          if (dessert.qty <= 0) {
+            dessert.qty = 0;
+            carts = carts.filter((item) => item !== dessert);
+          }
+          break;
       }
+
       renderDesserts();
     });
   });
+}
+
+function renderCarts() {
+  let cartFilledHTML = document.querySelector(".cart-details");
+  let cartEmptyHTML = document.querySelector(".cart-empty");
+
+  if (carts[0]) {
+    cartEmptyHTML.innerHTML = "";
+    cartEmptyHTML.style.display = "none";
+    const cartProduct = carts.forEach((item) => {
+      `            <article class="cart-item">
+              <div class="cart-item-info">
+                <p class="cart-item-name">${item.name}</p>
+
+                <div class="cart-item-pricing">
+                  <p class="cart-item-qty">1x</p>
+                  <p class="cart-item-unit-price">@ $5.50</p>
+                  <p class="cart-item-total-price">$5.50</p>
+                </div>
+              </div>
+
+              <button class="cart-remove-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 10 10">
+                  <path fill="currentColor"
+                    d="M8.375 9.375 5 6 1.625 9.375l-1-1L4 5 .625 1.625l1-1L5 4 8.375.625l1 1L6 5l3.375 3.375-1 1Z" />
+                </svg>
+              </button>
+            </article>`;
+    });
+
+    cartFilledHTML.innerHTML = `
+    <div class="cart-items">
+${cartProduct}
+          </div>
+
+          <div class="cart-summary">
+            <p class="cart-summary-label">Order Total</p>
+            <h3 class="cart-summary-total">$46.50</h3>
+          </div>
+
+          <div class="cart-info">
+            <p class="cart-info-msg">This is a <span>carbon-neutral</span> delivery</p>
+          </div>
+
+          <button class="cart-confirm-btn">Confirm Order</button>`;
+  } else {
+    cartFilledHTML.innerHTML = "";
+    cartEmptyHTML.style.display = "flex";
+    cartEmptyHTML.innerHTML = `<img src="assets/images/illustration-empty-cart.svg" alt="Empty Cart Illustration" draggable="false"
+            class="cart-empty-img">
+          <p class="cart-empty-msg">Your added items will appear here</p>`;
+  }
 }
