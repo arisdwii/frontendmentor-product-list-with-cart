@@ -120,18 +120,22 @@ function renderCarts() {
   let cartFilledHTML = document.querySelector(".cart-details");
   let cartEmptyHTML = document.querySelector(".cart-empty");
 
-  if (carts[0]) {
+  if (carts.length > 0) {
     cartEmptyHTML.innerHTML = "";
     cartEmptyHTML.style.display = "none";
-    const cartProduct = carts.forEach((item) => {
-      `            <article class="cart-item">
+
+    const cartItemsHTML = carts
+      .map((item) => {
+        const totalPrice = (item.qty * item.price).toFixed(2);
+
+        return `<article class="cart-item">
               <div class="cart-item-info">
                 <p class="cart-item-name">${item.name}</p>
 
                 <div class="cart-item-pricing">
-                  <p class="cart-item-qty">1x</p>
-                  <p class="cart-item-unit-price">@ $5.50</p>
-                  <p class="cart-item-total-price">$5.50</p>
+                  <p class="cart-item-qty">${item.qty}x</p>
+                  <p class="cart-item-unit-price">@ ${item.price.toFixed(2)}</p>
+                  <p class="cart-item-total-price">$${totalPrice}</p>
                 </div>
               </div>
 
@@ -142,16 +146,22 @@ function renderCarts() {
                 </svg>
               </button>
             </article>`;
-    });
+      })
+      .join("");
+
+    const totalAmount = carts.reduce(
+      (sum, item) => sum + item.qty * item.price,
+      0
+    );
 
     cartFilledHTML.innerHTML = `
-    <div class="cart-items">
-${cartProduct}
+          <div class="cart-items">
+            ${cartItemsHTML}
           </div>
 
           <div class="cart-summary">
             <p class="cart-summary-label">Order Total</p>
-            <h3 class="cart-summary-total">$46.50</h3>
+            <h3 class="cart-summary-total">$${totalAmount.toFixed(2)}</h3>
           </div>
 
           <div class="cart-info">
