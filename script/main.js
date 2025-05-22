@@ -1,4 +1,5 @@
 const dessertList = document.querySelector(".dessert-list");
+const confirmSection = document.querySelector(".confirmation");
 
 let desserts = [];
 let carts = [];
@@ -125,10 +126,10 @@ function renderCarts() {
     cartEmptyHTML.style.display = "none";
 
     const cartItemsHTML = carts
-      .map((item) => {
+      .map((item, index) => {
         const totalPrice = (item.qty * item.price).toFixed(2);
 
-        return `<article class="cart-item">
+        return `<article class="cart-item" data-index=${index}>
               <div class="cart-item-info">
                 <p class="cart-item-name">${item.name}</p>
 
@@ -169,11 +170,78 @@ function renderCarts() {
           </div>
 
           <button class="cart-confirm-btn">Confirm Order</button>`;
+
+    deleteItemCarts();
+    showConfirmation();
   } else {
     cartFilledHTML.innerHTML = "";
     cartEmptyHTML.style.display = "flex";
     cartEmptyHTML.innerHTML = `<img src="assets/images/illustration-empty-cart.svg" alt="Empty Cart Illustration" draggable="false"
             class="cart-empty-img">
           <p class="cart-empty-msg">Your added items will appear here</p>`;
+  }
+}
+
+function deleteItemCarts() {
+  document.querySelectorAll(".cart-remove-button").forEach((btn) => {
+    const index = btn.closest("[data-index]")?.dataset.index;
+
+    btn.addEventListener("click", () => {
+      carts[index].qty = 0;
+      carts.splice(index, 1);
+
+      renderDesserts();
+      renderCarts();
+    });
+  });
+}
+
+function showConfirmation() {
+  const cartConfirmBtn = document.querySelector(".cart-confirm-btn");
+
+  cartConfirmBtn.addEventListener("click", () => {
+    confirmSection.classList.add("open");
+    renderConfirmationItem();
+  });
+}
+
+function renderConfirmationItem() {
+  const confirmItems = document.querySelector(".confirmation-items");
+  const confirmTotalPrice = document.querySelector(".confirmation-total-price");
+
+  if (carts.length > 0) {
+    confirmItems.innerHTML = "";
+
+    confirmItems.innerHTML = carts
+      .map((item) => {
+        const totalPrice = (item.qty * item.price).toFixed(2);
+
+        return `<article class="confirmation-item">
+                <img src="${item.image.thumbnail}" alt=${
+          item.name
+        } class="confirmation-item-thumb"
+                  draggable="false">
+
+                <div class="confirmation-item-info">
+                  <p class="confirmation-item-name">${item.name}</p>
+                  <div class="confirmation-item-qty-info">
+                    <p class="confirmation-item-qty">${item.qty}x</p>
+                    <p class="confirmation-item-unit-price">@ ${item.price.toFixed(
+                      2
+                    )}</p>
+                  </div>
+                </div>
+
+                <p class="confirmation-item-price">$${totalPrice}</p>
+              </article>`;
+      })
+      .join("");
+
+    const totalAmount = carts.reduce(
+      (sum, item) => sum + item.qty * item.price,
+      0
+    );
+
+    confirmTotalPrice.innerHTML = `$${totalAmount.toFixed(2)}`;
   }
 }
