@@ -1,3 +1,4 @@
+const loadingScreen = document.getElementById("loadingScreen");
 const dessertList = document.querySelector(".dessert-list");
 const confirmSection = document.querySelector(".confirmation");
 const cartDetails = document.querySelector(".cart-details");
@@ -5,10 +6,16 @@ const cartEmpty = document.querySelector(".cart-empty");
 const confirmItems = document.querySelector(".confirmation-items");
 const confirmTotalPrice = document.querySelector(".confirmation-total-price");
 
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    loadingScreen.style.display = "none";
+  }, 1000);
+});
+
 let desserts = [];
 let carts = [];
 
-fetch("data.json")
+fetch("./data.json")
   .then((res) => res.json())
   .then((datas) => {
     desserts = datas.map((data) => ({ ...data, qty: 0 }));
